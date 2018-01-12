@@ -1,0 +1,40 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	   http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <context:component-scan base-package="com.minedata.service"/>
+
+	<context:component-scan base-package="com.minedata.controller">
+        <context:include-filter type="annotation" expression="com.alibaba.dubbo.config.annotation.Reference"/>
+    </context:component-scan>
+    
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="dubbo-provider" organization="dubbo" owner="aimeizi"/>
+    <dubbo:registry address="zookeeper://172.16.10.131:2181"/>
+    <!--***********************************************dubbo协议配置开始***********************************************-->
+    <!-- 用dubbo协议在20880端口暴露服务 -->
+    <dubbo:protocol name="dubbo" port="20880" serialization="kryo" optimizer="com.minedata.SerializationOptimizerImpl" server="netty" iothreads="10" threads="500"/>
+    <dubbo:protocol name="avro" port="40001"/>
+    <dubbo:protocol name="thrift2" port="33201"/>
+    <!-- use tomcat server -->
+    <dubbo:protocol name="rest" port="8085" server="tomcat" extension="com.minedata.ExceptionMapperSupport"/>
+    <!--***********************************************dubbo协议配置结束***********************************************-->
+
+    <!--***********************************************dubbo服务配置开始***********************************************-->
+    <!--*******************************************dubbo服务配置，xml配置方式*******************************************-->
+	<bean id="didiRestService" class="com.minedata.service.didi.DidiRestServiceImpl">
+    </bean>
+    <bean id="rticRestService" class="com.minedata.service.rticHistory.RticRestServiceImpl">
+    </bean>
+    <!--使用dubbo:service暴露服务-->
+    <dubbo:service interface="com.minedata.didi.DidiRestService" ref="didiRestService" protocol="rest" validation="true"/>
+    <dubbo:service interface="com.minedata.rtic.RticRestService" ref="rticRestService" protocol="rest" validation="true"/>
+    <dubbo:service interface="com.minedata.didi.DidiRestService" ref="didiRestService" protocol="dubbo" validation="true"/>
+    <!--*********************************************dubbo服务配置,注解方式*********************************************-->
+    <!-- 扫描注解包路径，多个包用逗号分隔，不填pacakge表示扫描当前ApplicationContext中所有的类 -->
+    <!--***********************************************dubbo服务配置结束***********************************************-->
+</beans>

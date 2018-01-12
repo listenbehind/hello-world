@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+    <!-- common -->
+
+    <property>
+        <name>hdfs_didi_store</name>
+        <value>/data/hushi/didi_city/province</value>
+    </property>
+
+    <property>
+        <name>hdfs_didi_province</name>
+        <value>/didi_track</value>
+    </property>
+
+    <property>
+        <name>local_didi_upload</name>
+        <value>E:\\test\\test</value>
+    </property>
+    
+    <property>
+        <name>hdfs_didi_upload</name>
+        <value>/databus/didi/</value>
+    </property>
+
+    <property>
+        <name>hdfs_url</name>
+        <value>hdfs://master</value>
+    </property>
+    
+    <property>
+        <name>mr_data</name>
+        <value>E:\\test\\mr_data</value>
+    </property>
+    <property>
+        <name>redis-host</name>
+        <value>172.16.10.152</value>
+    </property>
+    <property>
+        <name>redis-port</name>
+        <value>6379</value>
+    </property>
+    <property>
+        <name>lzop-path</name>
+        <value>E:\\原有数据\\soft\\lzop101w</value>
+    </property>
+    <property>
+        <name>rtic-home</name>
+        <value>E:\\data\\RTIC历史路况\\RTIC</value>
+    </property>
+    <property>
+        <name>crsPdPath</name>
+        <value>E:\data\rtic\Corresponding_TC\Province</value>
+    </property>
+    
+</configuration>
+
